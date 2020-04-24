@@ -5,7 +5,9 @@ terraform {
 }
 
 # Configure the Microsoft Azure Provider
-provider "azurerm" {}
+provider "azurerm" {
+  features {}
+	 }
 
 # Create a resource group if it doesn’t exist
 resource "azurerm_resource_group" "demo_resource_group" {
@@ -42,7 +44,7 @@ resource "azurerm_public_ip" "demo_public_ip" {
   name                         = "packerpublicip"
   location                     = "${azurerm_resource_group.demo_resource_group.location}"
   resource_group_name          = "${azurerm_resource_group.demo_resource_group.name}"
-  public_ip_address_allocation = "static"
+  allocation_method            = "Static"
   domain_name_label            = "demopackeriac"
 
   tags {
@@ -177,7 +179,7 @@ resource "azurerm_virtual_machine_scale_set" "vmss" {
 
     ssh_keys {
       path     = "/home/azureuser/.ssh/authorized_keys"
-      key_data = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDzWnLrGQrrR/1ghPRWzRVGLi64vMv+h+Wqx1BbgjHBUJd+TmJwrt8jJn7g/lMt9v2nkPU31B5iFeJJei5E/ShPAhxss4N5/J4fP6Uxq3iXcDC9LdC3P4wdQh5bxTYN1ruQtPpmyTPrLpfK++SPu42pAiAoAWdiw7s/WXLzxNALWsl2zrpNqTK9OdrDWmDFeu7PzVGxJ3cPEhPHfxzBTmj87vN5obSGr7uHrmtDwX5+5l6UscyWLdC6q6Wbk/SW8bICfccXJua3yddtXb5sx8jSivo99qusSpE8uUrpzFz9XFlARJQWtO0fsZKnK+yxZktcGNh8FvI89AU7iW4A180z lenisha@Terraform"
+      key_data = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDdEXt5wSO1sxsq8Njir5lWZuDHhELv+5eEN/ISDi198ATcCc38eGwBUYwoHyXij7SB4Y6yn/qSmBbgyK6Yvu5wG+BIJpQSm8t4sL9ob4yirVl9FE1SeEIy79/fVUQzpS89Ct+EDq99pH0fw5Ve4JwaVjoKRACmOQq2naUgoaSDbk29fSgwudvJjLvsiaYF9wLpkCWYZK0QjXRd/4OnpwSGlP4sBd/zBRWYe0C88FdP6alttI3BTU3ZXKL5smLC+hcivIlPnkFMwEVW/+foKuL58nHoK7aBRBxLpLmNYLtRL9gzGNjGDzjO/Fm8SebSkFDEB8XWJyGh3iT5tGk5+Ktg4N1AlhoJnZXVPDfBxiBIfZqZ1MbFlLMDwAtb0XAkMZkO8LrgC/fZ9bXf2lhEeaAz8Vybh2JCvn0ZYMXtDm+U8rZ/TUcApw2W9BxvWNXWG2C3Uhj54dkliy6LExQUSu8go6eVzy8wyHhwk8fgfNop8MsglOieMA3JUOcKn3LJhPZk1qJ2E4BkHWqQYhd7dJXvICKxRy0sHNykSNORuYL+AeazUjv9WwCm4q1M526euWPPA+iFiiiHVkB/r9Y/fZCCd9/P1hdP065gTFhAZixwym1bvc9/r1+tefnEAL408hmN6bqIUbo/Ir0DdEYtAKs937F4yEIaHwCQHvk1YKEWZw== subbiah.k@kaats.in"
     }
   }
 
@@ -188,6 +190,7 @@ resource "azurerm_virtual_machine_scale_set" "vmss" {
     ip_configuration {
       name                                   = "IPConfiguration"
       subnet_id                              = "${azurerm_subnet.demo_subnet.id}"
+      primary                                = true
       load_balancer_backend_address_pool_ids = ["${azurerm_lb_backend_address_pool.bpepool.id}"]
     }
   }
