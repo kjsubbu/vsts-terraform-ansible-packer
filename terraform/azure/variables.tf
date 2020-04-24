@@ -3,11 +3,11 @@ variable "credentials" {
 }
 
 variable "project" {
-  default = "terraform-ansible-demo"
+  default = "Ansterpacker"
 }
 
 variable "manageddiskname-rg" {
-  default = "managed-images"
+  default = "aci-vsts"
 }
 
 variable "baked_image_url" {
@@ -15,5 +15,5 @@ variable "baked_image_url" {
 }
 
 variable "manageddiskname" {
-  default = ""
+  default = "terrapacker"
 }
